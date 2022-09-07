@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NewReport extends Mailable
+class NewContact extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -32,7 +32,7 @@ class NewReport extends Mailable
     public function build()
     {
         return $this
-            ->subject('New Report!')
-            ->view('emails.new_report');
+            ->subject('New Contact!')
+            ->view('emails.new_contact');
     }
 }

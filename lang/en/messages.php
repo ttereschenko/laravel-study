@@ -1,6 +1,6 @@
 <?php
-    return [
-      'report' => [
-          'success' => 'Success!'
-      ],
-    ];
+return [
+    'report' => [
+        'success' => 'Success!'
+    ],
+];
