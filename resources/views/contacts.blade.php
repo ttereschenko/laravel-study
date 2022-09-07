@@ -3,21 +3,38 @@
 @section('title', 'Contact Us')
 
 @section('content')
-    <form action="{{ route('contact-form') }}" method="post">
-        @csrf
+    @if ($errors->any())
+        <div class="alert alert-danger">Error!</div>
+    @endif
+    <div class="row">
         <h5>Contact Us</h5>
-        <div class="d-flex flex-column flex-sm-row w-100 gap-2 my-2">
-            <label for="name" class="visually-hidden">Name</label>
-            <input id="name" type="text" class="form-control" placeholder="Name" name="name">
-        </div>
-        <div class="d-flex flex-column flex-sm-row w-100 gap-2 my-2">
-            <label for="email" class="visually-hidden">Email</label>
-            <input id="email" type="email" class="form-control" placeholder="Email" name="email">
-        </div>
-        <div class="d-flex flex-column flex-sm-row w-100 gap-2 my-2">
-            <label for="phone" class="visually-hidden">Phone</label>
-            <input id="phone" type="text" class="form-control" placeholder="Phone" name="phone">
-        </div>
-        <button class="btn btn-primary my-2" type="submit">Submit</button>
-    </form>
+        <form action="{{ route('contact.store') }}" method="post">
+            @csrf
+            <div class="form-group my-2">
+                <label for="name" class="visually-hidden">{{ __('validation.attributes.name') }}</label>
+                <input id="name" type="text" placeholder="Name" name="name" value="{{ old('name') }}"
+                       class="form-control @error('name') is-invalid @enderror">
+                @error('name')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group my-2">
+                <label for="email" class="visually-hidden">{{ __('validation.attributes.email') }}</label>
+                <input id="email" type="email" placeholder="Email" name="email" value="{{ old('email') }}"
+                       class="form-control @error('email') is-invalid @enderror">
+                @error('email')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group my-2">
+                <label for="phone" class="visually-hidden">{{ __('validation.attributes.phone') }}</label>
+                <input id="phone" type="text" placeholder="Phone" name="phone" value="{{ old('phone') }}"
+                       class="form-control @error('phone') is-invalid @enderror">
+                @error('phone')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <button class="btn btn-primary my-2" type="submit">Submit</button>
+        </form>
+    </div>
 @endsection
