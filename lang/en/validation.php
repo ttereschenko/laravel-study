@@ -171,6 +171,9 @@ return [
         'name' => 'Name',
         'email' => 'Email',
         'phone' => 'Phone',
+        'title' => 'Title',
+        'year' => 'Release Year',
+        'description' => 'Description',
     ],
 
 ];

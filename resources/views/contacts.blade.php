@@ -3,9 +3,6 @@
 @section('title', 'Contact Us')
 
 @section('content')
-    @if ($errors->any())
-        <div class="alert alert-danger">Error!</div>
-    @endif
     <div class="row">
         <h5>Contact Us</h5>
         <form action="{{ route('contact.store') }}" method="post">

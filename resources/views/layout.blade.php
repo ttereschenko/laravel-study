@@ -15,6 +15,8 @@
         <ul class="nav nav-pills">
             <li class="nav-item"><a href="{{ route('home') }}" class="nav-link active" aria-current="page">Home</a></li>
             <li class="nav-item"><a href="{{ route('about') }}" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="{{ route('movie.list') }}" class="nav-link">All Movies</a></li>
+            <li class="nav-item"><a href="{{ route('movie.create') }}" class="nav-link">Add Movie</a></li>
             <li class="nav-item"><a href="{{ route('contact') }}" class="nav-link">Contacts</a></li>
         </ul>
     </header>
