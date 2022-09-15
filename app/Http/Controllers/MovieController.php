@@ -42,7 +42,7 @@ class MovieController extends Controller
         return view('movies.edit', compact('movie'));
     }
 
-    public function edit(Movie $movie,EditRequest $request)
+    public function edit(Movie $movie, EditRequest $request)
     {
         $data = $request->validated();
         $movie->fill($data);
