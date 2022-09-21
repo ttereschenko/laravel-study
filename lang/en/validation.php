@@ -174,6 +174,8 @@ return [
         'title' => 'Title',
         'year' => 'Release Year',
         'description' => 'Description',
+        'password' => 'Password',
+        'password_confirmation' => 'Confirm your password',
     ],
 
 ];

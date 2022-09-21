@@ -17,9 +17,9 @@ class ContactController extends Controller
     public function store(ContactRequest $request)
     {
         $mail = new NewContact(
-          $request->get('name'),
-          $request->get('email'),
-          $request->get('phone'),
+            $request->get('name'),
+            $request->get('email'),
+            $request->get('phone'),
         );
 
         Mail::to('info@dev.com')->send($mail);
