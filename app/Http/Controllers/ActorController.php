@@ -27,7 +27,7 @@ class ActorController extends Controller
 
     public function list(Request $request)
     {
-        $actors = Actor::all();
+        $actors = Actor::paginate(3);
 
         return view('actors.list', compact('actors'));
     }

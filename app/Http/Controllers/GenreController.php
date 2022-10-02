@@ -27,7 +27,7 @@ class GenreController extends Controller
 
     public function list(Request $request)
     {
-        $genres = Genre::all();
+        $genres = Genre::paginate(3);
 
         return view('genres.list', compact('genres'));
     }
