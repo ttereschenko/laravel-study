@@ -16,8 +16,33 @@
             <li class="nav-item"><a href="{{ route('home') }}" class="nav-link active" aria-current="page">Home</a></li>
             <li class="nav-item"><a href="{{ route('about') }}" class="nav-link">About</a></li>
             @if(auth()->check())
-            <li class="nav-item"><a href="{{ route('movie.list') }}" class="nav-link">All Movies</a></li>
-            <li class="nav-item"><a href="{{ route('movie.create') }}" class="nav-link">Add Movie</a></li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#movie-collapse">Movies</a>
+                <div class="collapse" id="movie-collapse">
+                    <ul class="btn-toggle-nav list-unstyled small">
+                        <li><a href="{{ route('movie.list') }}" class="text-decoration-none mx-3">Show All</a></li>
+                        <li><a href="{{ route('movie.create') }}" class="text-decoration-none mx-3">Add Movie</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#main-genre-collapse">Genres</a>
+                <div class="collapse" id="main-genre-collapse">
+                    <ul class="btn-toggle-nav list-unstyled small">
+                        <li><a href="{{ route('genre.list') }}" class="text-decoration-none mx-3">Show All</a></li>
+                        <li><a href="{{ route('genre.create') }}" class="text-decoration-none mx-3">Add Genre</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="collapse" data-bs-target="#main-actor-collapse">Cast</a>
+                <div class="collapse" id="main-actor-collapse">
+                    <ul class="btn-toggle-nav list-unstyled small">
+                        <li><a href="{{ route('actor.list') }}" class="text-decoration-none mx-3">Show All</a></li>
+                        <li><a href="{{ route('actor.create') }}" class="text-decoration-none mx-3">Add Actor</a></li>
+                    </ul>
+                </div>
+            </li>
             @endif
             <li class="nav-item"><a href="{{ route('contact') }}" class="nav-link">Contacts</a></li>
         </ul>

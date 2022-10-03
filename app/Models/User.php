@@ -52,4 +52,9 @@ class User extends Authenticatable
             return Hash::make($value);
         });
     }
+
+    public function movies()
+    {
+        return $this->hasMany(Movie::class);
+    }
 }

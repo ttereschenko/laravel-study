@@ -176,6 +176,12 @@ return [
         'description' => 'Description',
         'password' => 'Password',
         'password_confirmation' => 'Confirm your password',
+        'genres' => 'Genres',
+        'surname' => 'Surname',
+        'patronymic' => 'Patronymic',
+        'date_of_birth' => 'Date of Birth',
+        'growth' => 'Growth',
+        'actors' => 'Cast',
     ],
 
 ];
