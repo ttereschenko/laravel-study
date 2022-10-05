@@ -21,8 +21,11 @@
                 <td>
                     <a href="{{ route('movie.show', ['movie' => $movie->id]) }}">Show Details</a>
                     <br>
+                    @can('edit', $movie)
                     <a href="{{ route('movie.edit.form', ['movie' => $movie->id]) }}">Edit</a>
                     <br>
+                    @endcan
+                    @can('delete', $movie)
                     <form action="{{ route('movie.delete', ['movie' => $movie->id]) }}" method="post">
                         @csrf
                         <button class="btn p-0">
@@ -32,6 +35,7 @@
                         </svg>
                         </button>
                     </form>
+                    @endcan
                 </td>
             </tr>
         @endforeach
