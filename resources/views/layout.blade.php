@@ -21,7 +21,9 @@
                 <div class="collapse" id="movie-collapse">
                     <ul class="btn-toggle-nav list-unstyled small">
                         <li><a href="{{ route('movie.list') }}" class="text-decoration-none mx-3">Show All</a></li>
+                        @can('create', \App\Models\Movie::class)
                         <li><a href="{{ route('movie.create') }}" class="text-decoration-none mx-3">Add Movie</a></li>
+                        @endcan
                     </ul>
                 </div>
             </li>
@@ -30,7 +32,9 @@
                 <div class="collapse" id="main-genre-collapse">
                     <ul class="btn-toggle-nav list-unstyled small">
                         <li><a href="{{ route('genre.list') }}" class="text-decoration-none mx-3">Show All</a></li>
+                        @can('create', \App\Models\Genre::class)
                         <li><a href="{{ route('genre.create') }}" class="text-decoration-none mx-3">Add Genre</a></li>
+                        @endcan
                     </ul>
                 </div>
             </li>
@@ -39,7 +43,9 @@
                 <div class="collapse" id="main-actor-collapse">
                     <ul class="btn-toggle-nav list-unstyled small">
                         <li><a href="{{ route('actor.list') }}" class="text-decoration-none mx-3">Show All</a></li>
+                        @can('create', \App\Models\Actor::class)
                         <li><a href="{{ route('actor.create') }}" class="text-decoration-none mx-3">Add Actor</a></li>
+                        @endcan
                     </ul>
                 </div>
             </li>

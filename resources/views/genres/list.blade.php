@@ -19,8 +19,15 @@
                 <td>{{ $genre->name }}</td>
                 <td>{{ $genre->created_at?->format('Y/m/d') }}</td>
                 <td>
-                    <a href="{{ route('genre.edit.form', ['genre' => $genre->id]) }}">Edit</a>
+                    @can('show', $genre)
+                        <a href="{{ route('genre.show', ['genre' => $genre->id]) }}">Show Details</a>
+                    @endcan
                     <br>
+                    @can('edit', $genre)
+                    <a href="{{ route('genre.edit.form', ['genre' => $genre->id]) }}">Edit</a>
+                    @endcan
+                    <br>
+                    @can('delete', $genre)
                     <form action="{{ route('genre.delete', ['genre' => $genre->id]) }}" method="post">
                         @csrf
                         <button class="btn p-0">
@@ -30,6 +37,7 @@
                             </svg>
                         </button>
                     </form>
+                    @endcan
                 </td>
             </tr>
         @endforeach

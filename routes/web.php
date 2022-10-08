@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\GenreController;
+use App\Models\Actor;
+use App\Models\Genre;
+use App\Models\Movie;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ContactController;
@@ -21,17 +24,24 @@ Route::group(['prefix' => '/movies', 'as' => 'movie.', 'middleware' => 'auth'], 
 
     Route::get('', [MovieController::class, 'list'])->name('list');
 
-    Route::get('/create', [MovieController::class, 'createForm'])->name('create.form');
+    Route::group(['prefix' => '/create', 'middleware' => 'can:create,' . Movie::class], function () {
 
-    Route::post('/create', [MovieController::class, 'create'])->name('create');
+        Route::get('', [MovieController::class, 'createForm'])->name('create.form');
+
+        Route::post('', [MovieController::class, 'create'])->name('create');
+    });
+
+    Route::group(['prefix' => '/{movie}/edit', 'middleware' => 'can:edit,' . Movie::class], function () {
+
+        Route::get('', [MovieController::class, 'editForm'])->name('edit.form');
+
+        Route::post('', [MovieController::class, 'edit'])->name('edit');
+    });
 
     Route::get('/{movie}', [MovieController::class, 'show'])->name('show');
 
-    Route::get('/{movie}/edit', [MovieController::class, 'editForm'])->name('edit.form');
-
-    Route::post('/{movie}/edit', [MovieController::class, 'edit'])->name('edit');
-
-    Route::post('/{movie}/delete', [MovieController::class, 'delete'])->name('delete');
+    Route::post('/{movie}/delete', [MovieController::class, 'delete'])->name('delete')
+        ->middleware('can:delete,' . Movie::class);
 });
 
 Route::get('/sign-up', [SignUpController::class, 'signUpForm'])->name('sign-up.form');
@@ -50,30 +60,44 @@ Route::group(['prefix' => '/genres', 'as' => 'genre.', 'middleware' => 'auth'], 
 
     Route::get('', [GenreController::class, 'list'])->name('list');
 
-    Route::get('/create', [GenreController::class, 'createForm'])->name('create.form');
+    Route::get('/create', [GenreController::class, 'createForm'])->name('create.form')
+        ->middleware('can:create,' . Genre::class );
 
-    Route::post('/create', [GenreController::class, 'create'])->name('create');
+    Route::post('/create', [GenreController::class, 'create'])->name('create')
+        ->middleware('can:create,' . Genre::class );
 
-    Route::get('/{genre}/edit', [GenreController::class, 'editForm'])->name('edit.form');
+    Route::get('/{genre}/edit', [GenreController::class, 'editForm'])->name('edit.form')
+        ->middleware('can:edit,' . Genre::class );
 
-    Route::post('/{genre}/edit', [GenreController::class, 'edit'])->name('edit');
+    Route::post('/{genre}/edit', [GenreController::class, 'edit'])->name('edit')
+        ->middleware('can:edit,' . Genre::class );
 
-    Route::post('/{genre}/delete', [GenreController::class, 'delete'])->name('delete');
+
+    Route::post('/{genre}/delete', [GenreController::class, 'delete'])->name('delete')
+        ->middleware('can:delete,' . Genre::class );
+
+    Route::get('/{genre}', [GenreController::class, 'show'])->name('show');
 });
 
-Route::group(['prefix' => '/actors', 'as' => 'actor.', 'middlware' => 'auth'], function () {
+Route::group(['prefix' => '/actors', 'as' => 'actor.', 'middleware' => 'auth'], function () {
 
     Route::get('', [ActorController::class, 'list'])->name('list');
 
-    Route::get('/create', [ActorController::class, 'createForm'])->name('create.form');
+    Route::get('/create', [ActorController::class, 'createForm'])->name('create.form')
+        ->middleware('can:create,' . Actor::class);
 
-    Route::post('/create', [ActorController::class, 'create'])->name('create');
+    Route::post('/create', [ActorController::class, 'create'])->name('create')
+        ->middleware('can:create,' . Actor::class);
 
-    Route::get('/{actor}', [ActorController::class, 'show'])->name('show');
+    Route::get('/{actor}', [ActorController::class, 'show'])->name('show')
+        ->middleware('can:show,' . Actor::class);
 
-    Route::get('/{actor}/edit', [ActorController::class, 'editForm'])->name('edit.form');
+    Route::get('/{actor}/edit', [ActorController::class, 'editForm'])->name('edit.form')
+        ->middleware('can:edit,' . Actor::class);
 
-    Route::post('/{actor}/edit', [ActorController::class, 'edit'])->name('edit');
+    Route::post('/{actor}/edit', [ActorController::class, 'edit'])->name('edit')
+        ->middleware('can:edit,' . Actor::class);
 
-    Route::post('/{actor}/delete', [ActorController::class, 'delete'])->name('delete');
+    Route::post('/{actor}/delete', [ActorController::class, 'delete'])->name('delete')
+        ->middleware('can:create,' . Actor::class);
 });

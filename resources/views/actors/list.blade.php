@@ -21,10 +21,15 @@
                 <td>{{ $actor->surname }}</td>
                 <td>{{ $actor->date_of_birth }}</td>
                 <td>
+                    @can('show', $actor)
                     <a href="{{ route('actor.show', ['actor' => $actor->id]) }}">Show details</a>
+                    @endcan
                     <br>
+                    @can('edit', $actor)
                     <a href="{{ route('actor.edit.form', ['actor' => $actor->id]) }}">Edit</a>
+                    @endcan
                     <br>
+                    @can('delete', $actor)
                     <form action="{{ route('actor.delete', ['actor' => $actor->id]) }}" method="post">
                     @csrf
                     <button class="btn p-0">
@@ -34,6 +39,7 @@
                         </svg>
                     </button>
                     </form>
+                    @endcan
                 </td>
             </tr>
         @endforeach
