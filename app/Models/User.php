@@ -60,9 +60,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(Movie::class);
     }
-
-    protected function logins()
-    {
-        return $this->hasMany(LoginHistory::class);
-    }
 }
