@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ActorController;
 use App\Http\Controllers\GenreController;
+use App\Http\Controllers\LoginHistoryController;
 use App\Models\Actor;
 use App\Models\Genre;
 use App\Models\Movie;
@@ -20,7 +21,7 @@ Route::get('/contact-us', [ContactController::class, 'show'])->name('contact');
 
 Route::post('/contact-us', [ContactController::class, 'store'])->name('contact.store');
 
-Route::group(['prefix' => '/movies', 'as' => 'movie.', 'middleware' => 'auth'], function () {
+Route::group(['prefix' => '/movies', 'as' => 'movie.', 'middleware' => ['auth', 'email.confirm']], function () {
 
     Route::get('', [MovieController::class, 'list'])->name('list');
 
@@ -31,7 +32,7 @@ Route::group(['prefix' => '/movies', 'as' => 'movie.', 'middleware' => 'auth'], 
         Route::post('', [MovieController::class, 'create'])->name('create');
     });
 
-    Route::group(['prefix' => '/{movie}/edit', 'middleware' => 'can:edit,' . Movie::class], function () {
+    Route::group(['prefix' => '/{movie}/edit', 'middleware' => 'can:edit,movie'], function () {
 
         Route::get('', [MovieController::class, 'editForm'])->name('edit.form');
 
@@ -41,7 +42,7 @@ Route::group(['prefix' => '/movies', 'as' => 'movie.', 'middleware' => 'auth'], 
     Route::get('/{movie}', [MovieController::class, 'show'])->name('show');
 
     Route::post('/{movie}/delete', [MovieController::class, 'delete'])->name('delete')
-        ->middleware('can:delete,' . Movie::class);
+        ->middleware('can:delete,movie');
 });
 
 Route::get('/sign-up', [SignUpController::class, 'signUpForm'])->name('sign-up.form');
@@ -99,5 +100,8 @@ Route::group(['prefix' => '/actors', 'as' => 'actor.', 'middleware' => 'auth'], 
         ->middleware('can:edit,' . Actor::class);
 
     Route::post('/{actor}/delete', [ActorController::class, 'delete'])->name('delete')
-        ->middleware('can:create,' . Actor::class);
+        ->middleware('can:delete,' . Actor::class);
 });
+
+Route::get('/login-history', [LoginHistoryController::class, 'list'])->name('login-history')
+        ->middleware('auth');

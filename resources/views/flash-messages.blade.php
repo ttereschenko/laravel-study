@@ -9,3 +9,9 @@
 @if(session()->has('error'))
     <div class="alert alert-danger">{{ session()->get('error') }}</div>
 @endif
+
+
+@if(session()->has('confirmation-alert'))
+    <div id="confirmation-alert" class="alert alert-danger">Please, confirm your email</div>
+@endif
+

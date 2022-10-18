@@ -65,6 +65,7 @@
                     <li><a  href="{{ route('sign-in.form') }}" class="dropdown-item">Sign In</a></li>
                     @endif
                     @if(auth()->check())
+                        <li><a  href="{{ route('login-history') }}" class="dropdown-item">Login History</a></li>
                         <li>
                             <form action="{{ route('sign-out') }}" method="post" class="form-inline">
                                 @csrf
