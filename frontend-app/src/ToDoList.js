@@ -24,7 +24,6 @@ function ToDoList() {
     }
 
     const deleteAll = (e) => {
-        e.preventDefault();
         setItems([]);
     }
 
@@ -49,9 +48,7 @@ function ToDoList() {
             <h1 className="text-center">ToDo List</h1>
             <div className="lg-6 md-8 sm-10 justify-content-center">
                 <div className="input-group">
-                    <form className="" onSubmit={deleteAll}>
-                        <button className="input-group-text">Delete All</button>
-                    </form>
+                    <button onClick={deleteAll} className="input-group-text">Delete All</button>
                     <form className="d-flex flex-fill" onSubmit={addItem}>
                         <input onChange={onInputChange} value={input} type="text" className="form-control w-100" />
                         <div className="input-group-append">
@@ -73,7 +70,7 @@ function ToDoList() {
 
 function ToDoItem({ value, isCompleted, toggle, deleteItem }) {
     return (
-        <li className={"list-group-item d-flex " + (isCompleted ? "completed" : "")} >
+        <li className={`list-group-item d-flex ${isCompleted ? "completed" : ""}`} >
             <input onChange={toggle} checked={isCompleted} className="form-check-input me-1" type="checkbox" />
             <span className="flex-grow-1">{value}</span>
             <button onClick={deleteItem} className="btn btn-close btn-sm" />

@@ -19,7 +19,7 @@ function TemperatureControl(props) {
     return (
         <div className="app-container">
             <div className="temperature-display-container">
-                <div className={"temperature-display " + (count > 15 ? "hot" : "cold")}>
+                <div className={`temperature-display  ${count > 15 ? "hot" : "cold"}`}>
                     {count}
                 </div>
             </div>
