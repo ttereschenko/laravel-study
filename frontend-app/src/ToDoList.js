@@ -1,30 +1,40 @@
-import { useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import './ToDoList.css';
+import NotificationContext from './context/NotificationContext';
 
-function ToDoList() {
-    const [input, setInput] = useState('');
-    const [items, setItems] = useState([]);
+function ToDoList(props) {
+    const { save, load } = props;
 
-    const onInputChange = (e) => {
-        setInput(e.target.value);
-    }
+    const input = useRef('');
+    const [items, setItems] = useState(JSON.parse(load()) ?? []);
+
+    const context = useContext(NotificationContext);
+
+    useEffect(() => {
+        save(JSON.stringify(items));
+    }, [items]);
 
     const addItem = (e) => {
         e.preventDefault();
 
-        if (input === '') {
-            alert('Nothing to add');
+        if (input.current.value === '') {
+            context.error('Nothing to add!');
             return;
         }
 
-        const newItems = [...items, { value: input, isCompleted: false }];
+        const newItems = [...items, { value: input.current.value, isCompleted: false }];
 
         setItems(newItems);
-        setInput('');
+
+        input.current.value = '';
+        input.current.blur();
+
+        context.success('Item was added!');
     }
 
     const deleteAll = (e) => {
         setItems([]);
+        context.success('All your items were successfully deleted!');
     }
 
     const toggleCompete = (index) => {
@@ -33,6 +43,7 @@ function ToDoList() {
         newItems[index].isCompleted = !newItems[index].isCompleted;
 
         setItems(newItems);
+        context.success(`Item was marked as ${newItems[index].isCompleted ? "completed" : "incompleted"}`);
     }
 
     const deleteItem = (index) => {
@@ -41,6 +52,7 @@ function ToDoList() {
         newItems.splice(index, 1);
 
         setItems(newItems);
+        context.success('Item was successfully deleted!')
     }
 
     return (
@@ -50,7 +62,7 @@ function ToDoList() {
                 <div className="input-group">
                     <button onClick={deleteAll} className="input-group-text">Delete All</button>
                     <form className="d-flex flex-fill" onSubmit={addItem}>
-                        <input onChange={onInputChange} value={input} type="text" className="form-control w-100" />
+                        <input ref={input} type="text" className="form-control w-100" />
                         <div className="input-group-append">
                             <button className="input-group-text">Add</button>
                         </div>

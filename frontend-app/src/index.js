@@ -4,12 +4,22 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 // import TemperatureControl from './TemperatureControl';
 import ToDoList from './ToDoList';
+import withLocalStorage from './withLocalStorage';
+import { NotificationProvider } from './context/NotificationContext';
+import NotificationBar from './components/NotificationBar';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const StorageToDoList = withLocalStorage('todo-list', ToDoList);
+// const StorageTemperatureControl = withLocalStorage('temperature-control', TemperatureControl);
+
 root.render(
   <React.StrictMode>
-    {/* <TemperatureControl step={1}/> */}
-    <ToDoList />
+    <NotificationProvider>
+      <NotificationBar />
+      {/* <StorageTemperatureControl step={1}/> */}
+      <StorageToDoList />
+    </NotificationProvider>
   </React.StrictMode>
 );
 
