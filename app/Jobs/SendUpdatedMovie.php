@@ -22,7 +22,7 @@ class SendUpdatedMovie implements ShouldQueue
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(private Movie $movie)
     {
         //
     }
@@ -32,13 +32,13 @@ class SendUpdatedMovie implements ShouldQueue
      *
      * @return void
      */
-    public function handle(Movie $movie)
+    public function handle()
     {
         $users = User::all();
 
         foreach ($users as $user) {
-            if ($user->id !== $movie->user_id) {
-                Mail::to($user->email)->send(new UpdatedMovie($movie));
+            if ($user->id !== $this->movie->user_id) {
+                Mail::to($user->email)->send(new UpdatedMovie($this->movie));
             }
         }
     }
