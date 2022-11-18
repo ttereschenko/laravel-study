@@ -30,12 +30,10 @@ class NotifyVerificationCommand extends Command
      */
     public function handle()
     {
-        $users = User::all();
+        $users = User::query()->whereNull('email_verified_at')->get();
 
         foreach ($users as $user) {
-            if ($user->email_verified_at === null) {
-                Mail::to($user->email)->send(new EmailConfirm($user));
-            }
+            Mail::to($user->email)->send(new EmailConfirm($user));
         }
 
         return self::SUCCESS;

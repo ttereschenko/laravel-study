@@ -19,7 +19,7 @@ class MovieResource extends JsonResource
             'title' => $this->title,
             'year' => $this->year,
             'description' => $this->description,
-            'user_id' => new UserResource($this->user),
+            'user' => new UserResource($this->user),
             'genres' => GenreResource::collection($this->genres),
             'actors' => ActorResource::collection($this->actors),
             'created_at' => $this->created_at,

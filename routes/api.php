@@ -32,7 +32,7 @@ Route::group(['prefix' => '/movies', 'middleware' => ['auth:api']], function () 
 
     Route::get('', [MovieController::class, 'list']);
 
-    Route::post('/create', [MovieController::class, 'create'])->middleware('can:create' . Movie::class);
+    Route::post('/create', [MovieController::class, 'create'])->middleware('can:create,' . Movie::class);
 
     Route::group(['prefix' => '/{movie}'], function () {
 
