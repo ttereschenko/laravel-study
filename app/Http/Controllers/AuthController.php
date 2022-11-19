@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Events\UserLoggedIn;
 use App\Http\Requests\User\SignInRequest;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
+    public function __construct(private UserService $userService)
+    {
+    }
+
     public function signInForm()
     {
         return view('sign-in');
@@ -18,17 +23,9 @@ class AuthController extends Controller
     {
         $credentials = $request->validated();
 
-//        $check = function ($user) {
-//            return $user->email_verified_at !== null;
-//        };
+        $user = $this->userService->signIn($credentials, 'web', $request);
 
-        if (Auth::attemptWhen($credentials)) {
-            $user = auth()->user();
-            $ipAddress = $request->ip();
-
-            $event = new UserLoggedIn($user, $ipAddress);
-            event($event);
-
+        if ($user) {
             session()->flash('success', "You're Signed In!");
 
             return redirect()->route('home');
@@ -43,7 +40,7 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-//        session()->flash('success', "You're signed out of your account!");
+        session()->flash('success', "You're signed out of your account!");
 
         return redirect()->route('sign-in.form');
     }

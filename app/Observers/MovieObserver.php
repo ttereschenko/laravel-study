@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Jobs\SendUpdatedMovie;
 use App\Mail\UpdatedMovie;
 use App\Models\Movie;
 use App\Models\User;
@@ -20,13 +21,7 @@ class MovieObserver
         $isYearChanged = $movie->year !== $movie->getOriginal('year');
 
         if ($isYearChanged) {
-            $users = User::all();
-
-            foreach ($users as $user) {
-                if ($user->id !== $movie->user_id) {
-                    Mail::to($user->email)->send(new UpdatedMovie($movie));
-                }
-            }
+            SendUpdatedMovie::dispatch($movie);
         }
     }
 }
