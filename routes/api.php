@@ -28,22 +28,19 @@ Route::post('/sign-up', [SignUpController::class, 'signUp']);
 
 Route::post('/sign-in', [AuthController::class, 'signIn']);
 
-Route::group(['prefix' => '/movies', 'middleware' => ['auth:api']], function () {
+Route::get('/movies', [MovieController::class, 'list']);
 
-    Route::get('', [MovieController::class, 'list']);
+Route::get('/movies/{movie}', [MovieController::class, 'show']);
+
+Route::group(['prefix' => '/movies', 'middleware' => ['auth:api']], function () {
 
     Route::post('/create', [MovieController::class, 'create'])->middleware('can:create,' . Movie::class);
 
-    Route::group(['prefix' => '/{movie}'], function () {
+    Route::put('/{movie}/edit', [MovieController::class, 'edit'])->middleware('can:edit,movie');
 
-        Route::get('', [MovieController::class, 'show']);
-
-        Route::put('/edit', [MovieController::class, 'edit'])->middleware('can:edit,movie');
-
-        Route::delete('/delete', [MovieController::class, 'delete'])->middleware('can:delete,movie');
-    });
+    Route::delete('/{movie}/delete', [MovieController::class, 'delete'])->middleware('can:delete,movie');
 });
 
-Route::get('/genres', [GenreController::class, 'list'])->middleware('auth:api');
+Route::get('/genres', [GenreController::class, 'list']);
 
-Route::get('/actors', [ActorController::class, 'list'])->middleware('auth:api');
+Route::get('/actors', [ActorController::class, 'list']);

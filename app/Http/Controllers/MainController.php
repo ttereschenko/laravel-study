@@ -41,7 +41,7 @@ class MainController extends Controller
             });
         }
 
-        $movies = $query->paginate(3)->appends($request->query());
+        $movies = $query->paginate()->appends($request->query());
 
         $genres = Genre::all();
         $actors = Actor::all();
