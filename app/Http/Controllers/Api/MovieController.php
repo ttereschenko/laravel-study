@@ -27,7 +27,7 @@ class MovieController extends Controller
 
     public function list()
     {
-        $movies = Movie::query()->with(['user', 'genres', 'actors'])->latest()->paginate(1);
+        $movies = Movie::query()->with(['user', 'genres', 'actors'])->latest()->paginate();
 
         return MovieResource::collection($movies);
     }
